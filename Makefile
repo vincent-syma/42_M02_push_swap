@@ -1,14 +1,20 @@
 NAME = push_swap
-CHECKER = checker
+CHECKER_NAME = checker
 
-CFLAGS = -Wall -Wextra -Werror -I -I./42_library
+CFLAGS = -Wall -Wextra -Werror
 CC = cc
 RM = rm -f
 AR = ar rcs
 
-LIB_DIR = ./42_library
-SRC_DIR = .
+INC_DIR = include
+SRC_DIR = src
 OBJ_DIR = temp
+VPATH = $(SRC_DIR)
+
+LIB_DIR = 42_library
+LIB_INC_DIR = $(LIB_DIR)/include
+
+INCLUDES = -I$(INC_DIR) -I$(LIB_INC_DIR)
 
 SRC = \
 		$(SRC_DIR)/main.c \
@@ -24,7 +30,7 @@ SRC = \
 		$(SRC_DIR)/push_swap_min_max_index.c \
 		$(SRC_DIR)/push_swap_index_cost.c
 
-CHECKER = \
+CHECKER_SRC = \
 			$(SRC_DIR)/checker.c \
 			$(SRC_DIR)/push_swap_input.c \
 			$(SRC_DIR)/push_swap_errors.c \
@@ -41,13 +47,13 @@ GRN   := \033[32m
 YEL   := \033[33m
 BLU   := \033[34m
 
-OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
-CHECKER_OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(CHECKER:.c=.o)))
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+CHECKER_OBJ = $(CHECKER_SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 $(NAME): $(OBJ) $(LIB_DIR)/libft.a
 		@$(MAKE) -C $(LIB_DIR)
 		@printf "Compiling the $(BOLD)'push_swap'$(RESET) program"
-		@$(CC) $(CFLAGS) $(OBJ) $(LIB_DIR)/libft.a -o $(NAME) && \
+		@$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(LIB_DIR)/libft.a -o $(NAME) && \
 		printf "%-10s[$(GRN)OK$(RESET)]\n" || \
 		(printf "[$(RED)FAIL$(RESET)]\n"; exit 1)
 		@printf "$(YEL)Run the program as follows:\n"
@@ -62,17 +68,17 @@ all: $(NAME)
 checker: $(CHECKER_OBJ) $(LIB_DIR)/libft.a
 		@$(MAKE) -C $(LIB_DIR)
 		@printf "Compiling the $(BOLD)'checker'$(RESET) program"
-		@$(CC) $(CFLAGS) $(CHECKER_OBJ) $(LIBFT_DIR)/libft.a -o $(CHECKER) && \
+		@$(CC) $(CFLAGS) $(INCLUDES) $(CHECKER_OBJ) $(LIB_DIR)/libft.a -o $(CHECKER_NAME) && \
 		printf "%-10s[$(GRN)OK$(RESET)]\n" || \
 		(printf "[$(RED)FAIL$(RESET)]\n"; exit 1)
 		@printf "$(YEL)Run the program as follows:\n"
 		@printf '$(RESET)ARG=\"4 67 3 87 23\"; ./push_swap $$ARG | ./checker $$ARG \n'
 		@printf "$(YEL)(the args are up to you)\n$(RESET)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@printf "CC %-35s" "$<"
-	@$(CC) $(CFLAGS) -c $< -o $@ && \
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ && \
 		printf "[$(GRN)OK$(RESET)]\n" || \
 		(printf "[$(RED)FAIL$(RESET)]\n"; exit 1)
 
@@ -81,13 +87,13 @@ clean:
 	@printf "$(BLU)Push_swap (and checker) objects have been deleted.$(RESET)\n"
 
 fclean: clean
-	@$(MAKE) fclean -C $(LIBFT_DIR)
-	@$(RM) $(NAME) $(CHECKER)
+	@$(MAKE) fclean -C $(LIB_DIR)
+	@$(RM) $(NAME) $(CHECKER_NAME)
 	@printf "$(BLU)Push_swap (and checker) has been deleted.$(RESET)\n"
 
-clean_libft:
-	@$(MAKE) clean -C $(LIBFT_DIR)
+clean_lib:
+	@$(MAKE) clean -C $(LIB_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re checker
+.PHONY: all clean fclean re checker clean_lib

@@ -6,14 +6,14 @@
 /*   By: ssucha <ssucha@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 19:52:23 by ssucha            #+#    #+#             */
-/*   Updated: 2026/03/09 18:30:07 by ssucha           ###   ########.fr       */
+/*   Updated: 2026/03/09 19:44:15 by ssucha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "42_library/include/libft.h"
+# include "libft.h"
 # include <limits.h>
 # include <unistd.h>
 
