@@ -1,7 +1,4 @@
-# M02: push_swap
-
-*This project has been created as part of the 42 curriculum by ssucha (vincent_syma).*
-
+# 42_M02: push_swap
 
 ## Table of Contents
 - [Description](#description)
@@ -16,7 +13,7 @@ ___
 
 I have 2 stacks named `a` and `b`. At the beginning the stack `a` contains a random number of unique negative and/or positive integers. The stack `b` is empty.
 
-**Goal of this project:** create a `push_swap` program, that is able to sort the numbers in stack `a` in ascending order using defined actions specified below. The instructions sequence should be as short as possible.
+**Goal of this 42 project:** create a `push_swap` program, that is able to sort the numbers in stack `a` in ascending order using defined actions specified below. The instructions sequence should be as short as possible.
 
 ```bash
 - sa (swap a)			# swap the first 2 elements at the top of stack `a`
@@ -70,13 +67,13 @@ make re				# make fclean and make all together
 ### Execution:
 ```bash
 # execute the sorting program:
-ARG="4 67 3 87 23"; ./push_swap $ARG	
+ARG="4 67 3 87 23"; ./push_swap $ARG
 
 # check if the stack is sorted correctly:
 ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker $ARG
 
 # check the number of actions performed:
-ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l	
+ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l
 ```
 
 - If no parameters are specified, the program does not display anything and returns to the prompt.
@@ -115,3 +112,15 @@ It is basically the same code as `push_swap` - taking the arguments, storing the
 I only had to add reading the instructions with which my own `get_next_line()` function really helped me.
 
 I stored the instructions to another linked list, linear this time.
+
+---
+
+## 👤 Author
+
+**Simona Sucha**
+*(also known as ssucha or vincent_syma)* <br>
+Python & C · Developer, Software Tester · 42 student
+
+🖥️ GitHub: https://github.com/vincent-syma/ <br>
+🔗 LinkedIn: https://www.linkedin.com/in/simona-such%C3%A1-5a1b1928b <br>
+✉️ Email: vincent.f.syma@email.cz <br>
